@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "App.apps.UsersConfig",
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'App.AppUser'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, '../data')
+MEDIA_URL = '/profile_pics/'
