@@ -40,3 +40,12 @@ class AppUser(AbstractUser):
         watermark = Image.open(watermark_path).convert("RGBA")
         resized_avatar.paste(watermark, (0, 0), watermark)
         resized_avatar.save(self.profile_pic.path)
+
+
+class Sympathy(models.Model):
+
+    from_user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='likes_given')
+    to_user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='likes_received')
+
+    class Meta:
+        unique_together = ('from_user', 'to_user')

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import AppUser
+from .models import AppUser, Sympathy
 
 
 class AppUserSerializer(serializers.ModelSerializer):
@@ -15,3 +15,9 @@ class AppUserSerializer(serializers.ModelSerializer):
         app_user.set_password(password)
         app_user.save()
         return app_user
+
+
+class SympathySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sympathy
+        fields = ['from_user', 'to_user']
