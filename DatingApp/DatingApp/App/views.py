@@ -4,6 +4,7 @@ import dotenv
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django_filters import rest_framework as filters
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
 
@@ -20,6 +21,13 @@ class AppUserCreateView(generics.CreateAPIView):
     queryset = AppUser.objects.all()
     serializer_class = AppUserSerializer
     permission_classes = [AllowAny]
+
+
+class AppUserListView(generics.ListAPIView):
+    queryset = AppUser.objects.all()
+    serializer_class = AppUserSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_fields = ('gender', 'first_name', 'last_name')
 
 
 class SympathyCreateView(generics.CreateAPIView):
