@@ -9,7 +9,7 @@ class AppUserAdmin(UserAdmin):
     add_form = AppUserCreationForm
     form = AppUserChangeForm
     model = AppUser
-    list_display = ['profile_pic', 'gender', 'first_name', 'last_name', 'email',]
+    list_display = ['profile_pic', 'gender', 'first_name', 'last_name', 'email', ]
     ordering = ("email",)
 
 
