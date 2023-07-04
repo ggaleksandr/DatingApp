@@ -11,7 +11,7 @@ from rest_framework.permissions import AllowAny
 from .models import AppUser
 from .models import Sympathy
 from .serializers import SympathySerializer, AppUserSerializer
-from .utils import check_sympathy
+from .utils import check_sympathy, calc_distance
 
 # Load .env file
 dotenv.load_dotenv()
@@ -29,6 +29,25 @@ class AppUserListView(generics.ListAPIView):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_fields = ('gender', 'first_name', 'last_name')
 
+    def get_queryset(self):
+        queryset = AppUser.objects.all()
+
+        if self.request.query_params.get('max_distance') is None:
+            # return the queryset as is
+            return queryset
+        # filter the queryset
+        else:
+            filtered_ids = []
+            max_distance = float(self.request.query_params.get('max_distance'))
+
+            for user in queryset:
+                dist = calc_distance(self.request.user.id, user.id)
+                if dist > max_distance:
+                    filtered_ids.append(user.id)
+                queryset = AppUser.objects.exclude(id__in=filtered_ids)
+
+            return queryset
+
 
 class SympathyCreateView(generics.CreateAPIView):
     queryset = Sympathy.objects.all()
@@ -40,8 +59,6 @@ class SympathyCreateView(generics.CreateAPIView):
 
         from_user = get_object_or_404(AppUser, id=request.user.id)
         to_user = get_object_or_404(AppUser, id=kwargs.get('id'))
-
-        print(kwargs.get('id'))
 
         is_ids_exist = Sympathy.objects.filter(from_user=from_user, to_user=to_user).exists()
 

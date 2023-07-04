@@ -6,7 +6,7 @@ from .models import AppUser, Sympathy
 class AppUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppUser
-        fields = ['profile_pic', 'gender', 'first_name', 'last_name', 'email', 'password']
+        fields = ['profile_pic', 'gender', 'first_name', 'last_name', 'email', 'password', 'lat', 'lng']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):

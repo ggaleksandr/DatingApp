@@ -23,9 +23,11 @@ class AppUser(AbstractUser):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     password = models.CharField(max_length=255)
+    lat = models.DecimalField(max_digits=22, decimal_places=16)
+    lng = models.DecimalField(max_digits=22, decimal_places=16)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['profile_pic', 'gender', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['profile_pic', 'gender', 'first_name', 'last_name', 'lat', 'lng']
 
     objects = AppUserManager()
 
@@ -43,7 +45,6 @@ class AppUser(AbstractUser):
 
 
 class Sympathy(models.Model):
-
     from_user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='likes_given')
     to_user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='likes_received')
 

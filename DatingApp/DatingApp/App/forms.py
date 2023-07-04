@@ -10,10 +10,10 @@ class AppUserCreationForm(UserCreationForm):
         widgets = {
             'password': forms.PasswordInput(),
         }
-        fields = ('profile_pic', 'gender', 'first_name', 'last_name', 'email', 'password')
+        fields = ('profile_pic', 'gender', 'first_name', 'last_name', 'email', 'password', 'lat', 'lng')
 
 
 class AppUserChangeForm(UserChangeForm):
     class Meta:
         model = AppUser
-        fields = ('profile_pic', 'gender', 'first_name', 'last_name', 'email', 'password')
+        fields = ('profile_pic', 'gender', 'first_name', 'last_name', 'email', 'password', 'lat', 'lng')
